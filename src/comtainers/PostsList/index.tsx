@@ -115,7 +115,7 @@ function PostList() {
 						>
 							<List.Item.Meta
 								avatar={<Avatar src={img} />}
-								title={<Link to={"/postView"}>{item.title}</Link>}
+								title={<Link to={"/postView/:id=" + item._id}>{item.title}</Link>}
 								description={tag(item.type)}
 							/>
 							{item.content.substring(0,100).replace(/[#+\-`*]/g,"")}
@@ -127,7 +127,7 @@ function PostList() {
 				<Menu selectedKeys={selectedKeys} onSelect={({selectedKeys}) => handleSelect(selectedKeys)} mode='vertical' className="menu">
 					<Item style={{width: '100%'}} key={'0'}><Icon type="appstore" /> 全部 ({data.length})</Item>
 					<Item style={{width: '100%'}} key={'1'}><Icon type="html5" /> 前端 </Item>
-					<Item style={{width: '100%'}} key={'2'}><Icon type="cloud-sync" /> 后端 </Item>
+					<Item style={{width: '100%'}} key={'2'}><Icon type="database" /> 后端 </Item>
 					<Item style={{width: '100%'}} key={'3'}><Icon type="cloud-server" /> 数据库 </Item>
 					<Item style={{width: '100%'}} key={'4'}><Icon type="tool" /> 工具 </Item>
 					<Item style={{width: '100%'}} key={'5'}><Icon type="edit" /> 刷题 </Item>

@@ -165,7 +165,7 @@ export default function Post() {
           <div className="contain">
           <div className="left">
             <TextArea className="text" autosize={{ minRows: 29, maxRows: 29 }} name="md"
-              value={md} onChange={(e) => handleMdChange(e)} />
+              placeholder="请填写 markdown 文章" value={md} onChange={(e) => handleMdChange(e)} />
           </div>
           <div className="right">
             <div>

@@ -1,5 +1,47 @@
 
 
 .post_view {
+  width: 800px;
   margin-top: 80px;
+
+  .title {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+
+    h1 {
+      color: #bcd4e0;
+    }
+  }
+
+
+  .body {
+    width: 100%;
+
+    .image {
+      width: 100%;
+      display: table;
+      text-align: center;
+      vertical-align: middle;
+
+      img {
+        display: inline-block;
+        max-width: 100%;
+        max-height: 300px;
+      }
+    }
+
+    .artical {
+      padding: 20px;
+      margin: 20px 0;
+      border-top: 1px solid #d9d9d9;
+      border-bottom: 1px solid #d9d9d9;
+      color: #666;
+    }
+  }
+
+  .comment {
+    width: 100%;
+    margin: 20px;
+  }
 }
