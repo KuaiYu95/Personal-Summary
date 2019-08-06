@@ -1,0 +1,28 @@
+
+
+// 屏幕宽度至少 800px
+@media screen and (min-width: 800px) {
+
+  .mainContent {
+    width: 800px;
+    margin-top: 80px;
+    margin-bottom: 20px;
+
+    .blogList {
+      position: relative;
+    }
+
+    .typeList {
+      position: fixed;
+      top: 80px;
+      left: calc((100vw - 800px) / 2 + 820px);
+
+      .menu {
+        border: none;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        width: 150px;
+      }
+    }
+  }
+}

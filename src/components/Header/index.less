@@ -6,6 +6,11 @@
   .header_container {
     width: 100%;
     height: @header_height;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: #fff;
     box-sizing: content-box;
     border-bottom: 1px solid #e8e8e8;
     box-shadow: 0 0 10px #efefef;
@@ -14,6 +19,7 @@
       width: 800px;
       height: 100%;
       margin: auto;
+      background-color: #fff;
 
       .logo {
         float: left;

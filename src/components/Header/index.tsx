@@ -1,31 +1,28 @@
 import React, {useState} from 'react'
-import { Menu, Icon } from 'antd';
-import Upload from './Upload/index'
+import { Menu, Icon } from 'antd'
+import { Link } from 'react-router-dom'
 import logo from '../../images/logos/logo800.png'
 import './index.less'
 
 const {Item} = Menu
+interface IProps {
 
-function Header() {
+}
+
+function Header(props:any) {
   const [current, setCurrent] = useState<string>('home')
-  const [isShowUpload, setIsShowUpload] = useState<boolean | undefined>(false)
+  // useEffect(() => {
+  //   if (current === 'home') {
+  //     console.log('home',props)
+  //     // props.history.replace('/home')
+  //   } else if (current === 'issue') {
+  //     console.log('issue')
+  //     // props.history.replace('/issue')
+  //   }
+  // })
 
-  function handleChange(e:any):void {
+  function handleClick(e:any):void {
     setCurrent(e.key)
-    if (e.key === 'upload') {
-      setIsShowUpload(true)
-    } else {
-      setIsShowUpload(false)
-    }
-  }
-
-  function handleOk():void {
-    console.log('上传成功')
-  }
-
-  function handleCancel():void {
-    setIsShowUpload(false)
-    setCurrent('home')
   }
 
   return (
@@ -35,32 +32,19 @@ function Header() {
           <img src={logo} alt="logo"/>
         </div>
         <div className="tagbar">
-          <Menu selectedKeys={[current]} onClick={(e) => handleChange(e)} className="menu" mode="horizontal">
+          <Menu selectedKeys={[current]} onClick={(e) => handleClick(e)} className="menu" mode="horizontal">
             <Item key="home">
-              <Icon type="home" />
-              首页
+              <Link to="/"><Icon type="home" />首页</Link>
             </Item>
             <Item key="issue">
-              <Icon type="form" />
-              发布
-            </Item>
-            <Item key="upload">
-              <Icon type="cloud-upload" />
-              上传
+              <Link to="/post"><Icon type="form" />发布</Link>
             </Item>
           </Menu>
         </div>
-        {isShowUpload ? 
-          <Upload 
-            isShowUpload={isShowUpload} 
-            handleOk={handleOk}
-            handleCancel={handleCancel}
-          />
-          : null
-        }
       </div>
     </div>
   )
 }
+
 
 export default Header

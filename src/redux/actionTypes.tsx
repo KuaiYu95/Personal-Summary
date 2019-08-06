@@ -1,0 +1,1 @@
+export const RECEIVE_ISSUE = 'RECEIVE_ISSUE'
