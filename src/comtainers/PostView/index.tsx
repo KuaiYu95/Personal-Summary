@@ -12,14 +12,15 @@ const CommentList = ({ comments }:any) => (
     dataSource={comments}
     header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
     itemLayout="horizontal"
-    renderItem={(props:any) => <Comment {...props} />}
+    renderItem={(props:any) => <Comment {...props} author='Commentator' 
+      avatar='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'/>}
   />
 )
 
 const Editor = ({ onChange, onSubmit, submitting, value }:any) => (
   <div>
     <Form.Item>
-      <TextArea rows={2} onChange={onChange} value={value} />
+      <TextArea rows={3} onChange={onChange} value={value} />
     </Form.Item>
     <Form.Item>
       <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
@@ -59,9 +60,10 @@ export default function PostView(props:any) {
   }, [id])
 
   useEffect(() => {
-    Axios.get('/commentsList')
+    Axios.get(`/commentsList:${id}`)
       .then(res => {
         console.log(res)
+        setComments(res.data)
       })
       .catch(err => {
         console.log(err)
@@ -73,13 +75,22 @@ export default function PostView(props:any) {
       return
     }
     setSubmitting(true)
-    const comment = {postId: id, content: value}
-
-    setTimeout(() => {
-      setSubmitting(false)
-      setValue('')
-      setComments([])
-    }, 1000)
+    const datetime = Date.now()
+    const comment = {postId: id, content: value, datetime}
+    Axios.post('/comment', comment)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+      .finally(() => {
+        const datas:any = [...comments, comment]
+          .sort((a:any, b:any) => b.datetime - a.datetime)
+        setSubmitting(false)
+        setValue('')
+        setComments(datas)
+      })
   }
 
   function handleChange(e:any) {
