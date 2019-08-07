@@ -86,16 +86,14 @@ export default function Post() {
     const data = {title, content: md, date, type, url: imageUrl}
     axios.post('/issue', data)
       .then(res => {
-        console.log(res)
         setSuccess(true)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-      .finally(() => {
         setTitle('')
         setMd('')
         setType(undefined)
+        setImageUrl('')
+      })
+      .catch(err => {
+        message.warning('图片过大，请重新上传')
         setImageUrl('')
       })
   }

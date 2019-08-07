@@ -1,4 +1,16 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 个人博客项目：用来记录自己的学习过程
+
+## 页面预览
+### 发布文章界面
+![发布文章界面](./img-issue.png)
+### 发布成功
+![发布成功](./img-success.png)
+### 首页
+![首页](./img-home.png)
+
+【注】：项目未完全开发成功，后续功能会陆续发布
+
+# This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 

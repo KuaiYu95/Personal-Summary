@@ -73,10 +73,10 @@ function PostList() {
 			.then(res => {
 				setCanLike(false)
 				let datas:any = data.map((it:any) => {
-					if (it._id == id) {
+					if (it._id === id) {
 						return {...it, likeCount: it.likeCount + 1}
 					}
-					return
+					return null
 				})
 				setData(datas)
 				setTimeout(() => {
