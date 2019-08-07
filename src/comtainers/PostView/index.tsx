@@ -51,7 +51,6 @@ export default function PostView(props:any) {
   useEffect(() => {
     Axios.get(`/postView:${id}`)
       .then(res => {
-        console.log(res)
         setData(res.data)
       })
       .catch(err => {
@@ -62,8 +61,11 @@ export default function PostView(props:any) {
   useEffect(() => {
     Axios.get(`/commentsList:${id}`)
       .then(res => {
-        console.log(res)
-        setComments(res.data)
+        let {data} = res
+        data = data.map((it:any) => {
+          return {content:it.content, datetime:moment(+it.datetime).fromNow()}
+        })
+        setComments(data)
       })
       .catch(err => {
         console.log(err)
@@ -75,21 +77,20 @@ export default function PostView(props:any) {
       return
     }
     setSubmitting(true)
-    const datetime = Date.now()
-    const comment = {postId: id, content: value, datetime}
+    let datetime = Date.now().toString()
+    let comment = {postId: id, content: value, datetime}
     Axios.post('/comment', comment)
       .then((res) => {
-        console.log(res)
+        let com = {content:comment.content, datetime:moment(+comment.datetime).fromNow()}
+        let datas:any = [...comments, com]
+        setComments(datas)
       })
       .catch(err => {
         console.log(err)
       })
       .finally(() => {
-        const datas:any = [...comments, comment]
-          .sort((a:any, b:any) => b.datetime - a.datetime)
         setSubmitting(false)
         setValue('')
-        setComments(datas)
       })
   }
 
@@ -112,6 +113,7 @@ export default function PostView(props:any) {
         </div>
       </div>
       <div className="comment">
+        {comments.length > 0 && <CommentList comments={comments} />}
         <Comment
           avatar={
             <Avatar
@@ -129,7 +131,6 @@ export default function PostView(props:any) {
           }
         />
       </div>
-      {comments.length > 0 && <CommentList comments={comments} />}
     </div>
   )
 }

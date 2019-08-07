@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { List, Avatar, Icon, Tag, BackTop, Menu } from 'antd'
+import { List, Avatar, Icon, Tag, BackTop, Menu, message } from 'antd'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import axios from 'axios';
@@ -10,11 +10,13 @@ const { Item } = Menu
 interface IconType {
 	type: string,
 	text: string,
+	id?: any,
 }
 
 function PostList() {
 	const [selectedKeys, setSelectedKeys] = useState(['0'])
 	const [data, setData] = useState([])
+	const [canLike, setCanLike] = useState(true)
 	useEffect(() => {
 		axios.get(`/postsList:keys=${selectedKeys}`)
 			.then(res => {
@@ -22,22 +24,9 @@ function PostList() {
 				setData(res.data)
 			})
 	}, [data.length])
-	
-	const listData = [];
-	for (let i = 0; i < 23; i++) {
-		listData.push({
-			href: 'http://ant.design',
-			title: `ant design part ${i}`,
-			avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-			description:
-				'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-			content:
-				'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-		});
-	}
 
-	const IconText = ({ type, text }:IconType) => (
-		<span>
+	const IconText = ({ type, text, id }:IconType) => (
+		<span onClick={() => handleClick(id)}>
 			<Icon type={type} style={{ marginRight: 8 }} />
 			{text}
 		</span>
@@ -73,6 +62,31 @@ function PostList() {
 				setData(res.data)
 			})
 	}
+
+	function handleClick(id: string) {
+		if (!id) return 
+		if (!canLike) {
+			message.warning('5小时内不能重复点赞')
+			return
+		} 
+		axios.post('/like', {_id:id})
+			.then(res => {
+				setCanLike(false)
+				let datas:any = data.map((it:any) => {
+					if (it._id == id) {
+						return {...it, likeCount: it.likeCount + 1}
+					}
+					return
+				})
+				setData(datas)
+				setTimeout(() => {
+					setCanLike(true)
+				}, 1000*60*60*5)
+			})
+			.catch(err => {
+				console.log(err)
+			})
+	}
 	
 	const img = require('../../images/logos/logo800.png')
 	return (
@@ -104,7 +118,7 @@ function PostList() {
 						<List.Item
 							key={item.title}
 							actions={[
-								<IconText type="like" text={item.likeCount} />,
+								<IconText type="like" text={item.likeCount} id={item._id} />,
 								<IconText type="message" text={item.commentCount} />,
 								<IconText type="eye" text={item.viewCount} />,
 								<IconText type="clock-circle" text={moment(+item.date).fromNow()} />,

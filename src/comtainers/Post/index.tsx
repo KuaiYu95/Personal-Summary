@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {Upload, message, Input, Button, Icon, TreeSelect, Result} from 'antd'
 import ReactMarkdown from 'react-markdown'
+import {Link} from 'react-router-dom'
 import axios from 'axios'
 import './index.less'
 
@@ -126,7 +127,7 @@ export default function Post() {
           subTitle="恭喜你在成功的道路上又迈进了一步"
           extra={[
             <Button key="postid">
-              前往文章页面
+              <Link to="/">前往首页</Link>
             </Button>,
             <Button type="primary" key="issue" onClick={() => setSuccess(false)}>
               继续发布
