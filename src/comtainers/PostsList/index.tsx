@@ -16,7 +16,7 @@ interface IconType {
 function PostList() {
 	const [selectedKeys, setSelectedKeys] = useState(['0'])
 	const [data, setData] = useState([])
-	const [canLike, setCanLike] = useState(true)
+	// const [canLike, setCanLike] = useState(true)
 	useEffect(() => {
 		axios.get(`/postsList:keys=${selectedKeys}`)
 			.then(res => {
@@ -65,23 +65,23 @@ function PostList() {
 
 	function handleClick(id: string) {
 		if (!id) return 
-		if (!canLike) {
-			message.warning('5小时内不能重复点赞')
-			return
-		} 
+		// if (!canLike) {
+		// 	message.warning('5小时内不能重复点赞')
+		// 	return
+		// } 
 		axios.post('/like', {_id:id})
 			.then(res => {
-				setCanLike(false)
+				// setCanLike(false)
 				let datas:any = data.map((it:any) => {
 					if (it._id === id) {
 						return {...it, likeCount: it.likeCount + 1}
 					}
-					return null
+					return it
 				})
 				setData(datas)
-				setTimeout(() => {
-					setCanLike(true)
-				}, 1000*60*60*5)
+				// setTimeout(() => {
+				// 	setCanLike(true)
+				// }, 1000*60*60*5)
 			})
 			.catch(err => {
 				console.log(err)
@@ -106,12 +106,19 @@ function PostList() {
 					dataSource={data}
 					footer={
 						<div>
-							<div>欢迎来到蒯煜的个人博客</div>
-							<br/>
-							<div><Icon type="github" /> <a href="https://github.com/KuaiYu95" rel="noopener noreferrer" 
-								target="_blank" >https://github.com/KuaiYu95</a></div>
-							<br/>
-							<div><Icon type="wechat" /> mywx_ky</div>
+							<h4>欢迎来到蒯煜的个人博客</h4>
+							<em>该项目是专门用来存储个人学习笔记及心得体会的网站，可供他人学习参观</em><br/>
+							<em>如果疑问或错误，可在文章下方评论</em><br/>
+							<div>
+								<span>待完成功能：</span>
+								<ul>
+									<li>页面路由bug</li>
+									<li>点赞bug</li>
+									<li>查询功能</li>
+									<li>首页排序功能：发布时间，点赞量，查看量，评论量</li>
+									<li>上传 markdown 文件功能</li>
+								</ul>
+							</div>
 						</div>
 					}
 					renderItem={(item:any) => (
