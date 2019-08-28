@@ -15,12 +15,12 @@ interface IconType {
 
 function PostList() {
 	const [selectedKeys, setSelectedKeys] = useState(['0'])
+	const [selectedKeysTwo, setSelectedKeysTwo] = useState(['date'])
 	const [data, setData] = useState([])
 	// const [canLike, setCanLike] = useState(true)
 	useEffect(() => {
 		axios.get(`/postsList:keys=${selectedKeys}`)
 			.then(res => {
-				console.log(res.data)
 				setData(res.data)
 			})
 	}, [data.length])
@@ -56,11 +56,21 @@ function PostList() {
 
 	function handleSelect(selectedKeys:string[]) {
 		setSelectedKeys(selectedKeys)
-		console.log(selectedKeys)
 		axios.get(`/postsList:keys=${selectedKeys}`)
 			.then(res => {
 				setData(res.data)
+				setSelectedKeysTwo(['date'])
 			})
+	}
+
+	function handleSelect2(selectedKeys:string[]) {
+		setSelectedKeysTwo(selectedKeys)
+		const type = selectedKeys[0]
+		if (type === 'issueTime') {
+			setData(data.sort((a: any, b: any) => a[type] - b[type]))
+		} else {
+			setData(data.sort((a: any, b: any) => b[type] - a[type]))
+		}
 	}
 
 	function handleClick(id: string) {
@@ -110,12 +120,10 @@ function PostList() {
 							<em>该项目是专门用来存储个人学习笔记及心得体会的网站，可供他人学习参观</em><br/>
 							<em>如果疑问或错误，可在文章下方评论</em><br/>
 							<div>
-								<span>待完成功能：</span>
+								<span>待完善功能：</span>
 								<ul>
-									<li>页面路由bug</li>
 									<li>点赞bug</li>
 									<li>查询功能</li>
-									<li>首页排序功能：发布时间，点赞量，查看量，评论量</li>
 									<li>上传 markdown 文件功能</li>
 								</ul>
 							</div>
@@ -153,6 +161,14 @@ function PostList() {
 					<Item style={{width: '100%'}} key={'4'}><Icon type="tool" /> 工具 </Item>
 					<Item style={{width: '100%'}} key={'5'}><Icon type="edit" /> 刷题 </Item>
 					<Item style={{width: '100%'}} key={'6'}><Icon type="file-markdown" /> 日志 </Item>
+				</Menu>
+			</div>
+			<div className="sort">
+				<Menu selectedKeys={selectedKeysTwo} onSelect={({selectedKeys}) => handleSelect2(selectedKeys)} mode='vertical' className="menu">
+					<Item style={{width: '100%'}} key={'date'}><Icon type="history" /> 发布时间 </Item>
+					<Item style={{width: '100%'}} key={'likeCount'}><Icon type="star" /> 点赞量 </Item>
+					<Item style={{width: '100%'}} key={'viewCount'}><Icon type="eye" /> 查看量 </Item>
+					<Item style={{width: '100%'}} key={'commentCount'}><Icon type="mail" /> 评论量 </Item>
 				</Menu>
 			</div>
 		</div>
