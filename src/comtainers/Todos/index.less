@@ -1,0 +1,102 @@
+.container {
+  width: 800px;
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #999;
+
+
+  .header {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .ant-checkbox-inner {
+      width: 24px;
+      height: 24px;
+    }
+
+    .ant-input {
+      width: 680px;
+      margin: 0 20px;
+    }
+  }
+
+  .center {
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 20px;
+
+    .left {
+      color: #bcd4e0;
+    }
+
+    .select {
+      margin-left: 200px;
+      margin-right: 100px;
+      display: inline-block;
+
+      > div {
+        display: inline-block;
+        margin-right: 20px;
+        padding-left: 8px;
+        padding-right: 8px;
+        cursor: pointer;
+      }
+      > div:hover {
+        color: #bcd4e0;
+      }
+    }
+
+    .clear:hover {
+      color: #bcd4e0;
+      cursor: pointer;
+      
+    }
+  }
+
+  .list {
+    width: 100%;
+    font-size: 18px;
+
+    .item {
+      padding: 10px 0;
+      display: flex;
+      align-items: flex-start;
+
+      .block {
+        margin: 0 20px;
+        padding: 5px 10px;
+      }
+
+      .time {
+        display: inline-block;
+        margin-right: 20px;
+        font-size: 10px;
+      }
+
+      .todo {
+        width: 610px;
+        display: inline-block;
+      }
+    }
+
+    .item:nth-child(odd) {
+      .block {
+        background-color: #96c1d4;
+        color: #ddd;
+      }
+    }
+
+    .item:nth-child(even) {
+      .block {
+        background-color: #cce1eb;
+        color: #666;
+      }
+    }
+  }
+}

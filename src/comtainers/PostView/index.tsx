@@ -70,7 +70,7 @@ export default function PostView(props:any) {
       .catch(err => {
         console.log(err)
       })
-  }, [comments.length])
+  }, [comments.length, id])
 
   function handleSubmit() {
     if (!value) {

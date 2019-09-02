@@ -5,23 +5,21 @@ import logo from '../../images/logos/logo800.png'
 import './index.less'
 
 const {Item} = Menu
-interface IProps {
 
-}
-
-function Header(props:any) {
-  const [current, setCurrent] = useState<string>('home')
-  // useEffect(() => {
-  //   if (current === 'home') {
-  //     console.log('home',props)
-  //     // props.history.replace('/home')
-  //   } else if (current === 'issue') {
-  //     console.log('issue')
-  //     // props.history.replace('/issue')
-  //   }
-  // })
+function Header() {
+  const [current, setCurrent] = useState<string>('')
+  let tabURL = localStorage.getItem('tabURL')
+  if (typeof tabURL === 'string') {
+    if (current !== tabURL) {
+      setCurrent(tabURL)
+    }
+  } else {
+    localStorage.setItem('tabURL', 'home')
+    setCurrent('home')
+  }
 
   function handleClick(e:any):void {
+    localStorage.setItem('tabURL', e.key)
     setCurrent(e.key)
   }
 
@@ -34,10 +32,16 @@ function Header(props:any) {
         <div className="tagbar">
           <Menu selectedKeys={[current]} onClick={(e) => handleClick(e)} className="menu" mode="horizontal">
             <Item key="home">
-              <Link to="/"><Icon type="home" />首页</Link>
+              <Link to="/"><Icon type="home" />Home</Link>
             </Item>
             <Item key="issue">
-              <Link to="/post"><Icon type="form" />发布</Link>
+              <Link to="/post"><Icon type="form" />Issue</Link>
+            </Item>
+            <Item key="todos">
+              <Link to="/todos"><Icon type="ordered-list" />Todos</Link>
+            </Item>
+            <Item key="self">
+              <Link to="/self"><Icon type="user" />About me</Link>
             </Item>
           </Menu>
         </div>

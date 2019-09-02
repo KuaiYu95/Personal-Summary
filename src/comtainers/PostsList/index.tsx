@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { List, Avatar, Icon, Tag, BackTop, Menu, message } from 'antd'
+import { List, Avatar, Icon, Tag, BackTop, Menu } from 'antd'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import axios from 'axios';
@@ -23,7 +23,7 @@ function PostList() {
 			.then(res => {
 				setData(res.data)
 			})
-	}, [data.length])
+	}, [data.length, selectedKeys])
 
 	const IconText = ({ type, text, id }:IconType) => (
 		<span onClick={() => handleClick(id)}>
